@@ -1,5 +1,5 @@
 {
-  "1001": "File not exists",
-  "1002": "Request parameter is null or empty",
-  "1003": "Mysql connect failed"
+  "2001": "File not exists",
+  "2002": "Request parameter is null or empty",
+  "2003": "Mysql connect failed"
 }

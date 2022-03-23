@@ -4,11 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/maczh/gintool/mgresult"
 	"github.com/maczh/logs"
 	"github.com/maczh/mgcache"
 	"github.com/maczh/mgconfig"
+	"github.com/maczh/utils"
+	"mgerr/errcode"
 	"os"
 	"runtime"
 	"strconv"
@@ -17,17 +20,23 @@ import (
 )
 
 var errorCodeMessageI8N = make(map[string]map[int]string)
+var errorLangs = []string{"zh-cn", "en-us", "zh-tw", "fr", "it", "de", "ja", "ko", "ru"}
 
 const (
 	SUCCESS = 1
 )
 
 func LoadErrorCodeMessage(lang, errorFile string) error {
+	if !utils.StringArrayContains(errorLangs, lang) {
+		logs.Error("{}语言代码暂不支持", lang)
+		return errors.New("doesn't support " + lang + " language.")
+	}
 	f, err := os.Open(errorFile)
 	if err != nil {
 		logs.Error("加载错误代码json文件错误:{}", err.Error())
 		return err
 	}
+
 	defer f.Close()
 	errCodeMsgMap := map[string]string{}
 	err = json.NewDecoder(f).Decode(&errCodeMsgMap)
@@ -35,7 +44,10 @@ func LoadErrorCodeMessage(lang, errorFile string) error {
 		logs.Error("json文件格式错误:{}", err.Error())
 		return err
 	}
-	errMap := map[int]string{}
+	errMap := errorCodeMessageI8N[lang]
+	if errMap == nil || len(errMap) == 0 {
+		errMap = map[int]string{}
+	}
 	for k, v := range errCodeMsgMap {
 		code, err := strconv.ParseInt(k, 10, 64)
 		if err != nil {
@@ -48,6 +60,10 @@ func LoadErrorCodeMessage(lang, errorFile string) error {
 }
 
 func Error(code int, lang string) (int, string) {
+	if !utils.StringArrayContains(errorLangs, lang) {
+		logs.Error("{}语言代码暂不支持", lang)
+		return code, "未知语言"
+	}
 	errCodeMsgMap, exists := errorCodeMessageI8N[lang]
 	if !exists {
 		return code, "未知语言"
@@ -59,8 +75,13 @@ func Error(code int, lang string) (int, string) {
 	return code, msg
 }
 
-func LocalError(code int) error{
-	_,err := Error(code,GetCurrentLanguage())
+func ErrorWithMsg(code int, lang, msg string) (int, string) {
+	_, info := Error(code, lang)
+	return code, fmt.Sprintf("%s:%s", info, msg)
+}
+
+func LocalError(code int) error {
+	_, err := Error(code, GetCurrentLanguage())
 	return errors.New(err)
 }
 
@@ -72,7 +93,19 @@ func ErrorResult(status int) mgresult.Result {
 	return mgresult.Error(Error(status, GetCurrentLanguage()))
 }
 
+func ErrorResultWithMsg(status int, msg string) mgresult.Result {
+	return mgresult.Error(ErrorWithMsg(status, GetCurrentLanguage(), msg))
+}
+
 func Init() {
+	errorCodeMessageI8N["zh-cn"] = errcode.InitZhCN()
+	errorCodeMessageI8N["zh-tw"] = errcode.InitZhTw()
+	errorCodeMessageI8N["en-us"] = errcode.InitEnUs()
+	errorCodeMessageI8N["fr"] = errcode.InitFr()
+	errorCodeMessageI8N["de"] = errcode.InitDe()
+	errorCodeMessageI8N["it"] = errcode.InitIt()
+	errorCodeMessageI8N["ja"] = errcode.InitJa()
+	errorCodeMessageI8N["ko"] = errcode.InitKo()
 	languages := mgconfig.GetConfigString("go.i8n.languages")
 	if languages == "" {
 		return
@@ -88,6 +121,9 @@ func RequestLanguage() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		lang := c.GetHeader("X-Lang")
 		if lang == "" {
+			lang = "zh-cn"
+		}
+		if !utils.StringArrayContains(errorLangs, lang) {
 			lang = "zh-cn"
 		}
 		routineId := GetGID()
