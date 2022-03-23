@@ -36,11 +36,11 @@ go get -u github.com/maczh/mgerr
 
 ```yaml
 go:
-	i8n:
-		languages: zh-cn,en-us
-		json:
-			zh-cn: /opt/go/bin/errcodes/myproject.errcode.zh-cn.json
-			en-us: /opt/go/bin/errcodes/myproject.errcode.en-us.json
+  i8n:
+    languages: zh-cn,en-us
+      json:
+        zh-cn: /opt/go/bin/errcodes/myproject.errcode.zh-cn.json
+        en-us: /opt/go/bin/errcodes/myproject.errcode.en-us.json
 ```
 
 ### 2.3 在mgin工程的main中初始化错误代码配置
