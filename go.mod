@@ -1,11 +1,14 @@
-module mgerr
+module github.com/maczh/mgerr
 
 go 1.17
 
 require (
+	github.com/gin-gonic/gin v1.7.4
 	github.com/maczh/gintool v1.0.2
 	github.com/maczh/logs v1.0.2
+	github.com/maczh/mgcache v1.0.0
 	github.com/maczh/mgconfig v1.0.0
+	github.com/maczh/utils v1.0.0
 )
 
 require (
@@ -24,10 +27,10 @@ require (
 	github.com/couchbase/gocbcore/v10 v10.0.4 // indirect
 	github.com/deepmap/oapi-codegen v1.3.6 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20191124224453-732737034ffd // indirect
+	github.com/emirpasic/gods v1.12.0 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.7.4 // indirect
 	github.com/go-errors/errors v1.0.1 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
@@ -35,6 +38,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible // indirect
 	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/go-zookeeper/zk v1.0.2 // indirect
+	github.com/gofrs/uuid v4.1.0+incompatible // indirect
 	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
@@ -47,6 +51,7 @@ require (
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/hashicorp/serf v0.9.5 // indirect
+	github.com/henrylee2cn/mahonia v0.0.0-20150715080413-be6deb105fbc // indirect
 	github.com/influxdata/influxdb-client-go v1.4.0 // indirect
 	github.com/influxdata/line-protocol v0.0.0-20200327222509-2487e7298839 // indirect
 	github.com/jinzhu/gorm v1.9.16 // indirect
@@ -56,6 +61,7 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/knadh/koanf v1.3.0 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
+	github.com/kr/fs v0.1.0 // indirect
 	github.com/labstack/echo/v4 v4.1.11 // indirect
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
@@ -63,7 +69,6 @@ require (
 	github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042 // indirect
 	github.com/levigross/grequests v0.0.0-20190908174114-253788527a1a // indirect
 	github.com/lib/pq v1.1.1 // indirect
-	github.com/maczh/mgcache v1.0.0 // indirect
 	github.com/maczh/mgtrace v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattbaird/elastigo v0.0.0-20170123220020-2fe47fd29e4b // indirect
@@ -80,6 +85,7 @@ require (
 	github.com/nacos-group/nacos-sdk-go v1.0.9 // indirect
 	github.com/olivere/elastic v6.2.37+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pkg/sftp v1.13.4 // indirect
 	github.com/prometheus/client_golang v1.11.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.26.0 // indirect
