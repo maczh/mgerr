@@ -97,6 +97,13 @@ func ErrorResultWithMsg(status int, msg string) mgresult.Result {
 	return mgresult.Error(ErrorWithMsg(status, GetCurrentLanguage(), msg))
 }
 
+func ErrorResultWithErr(status int, err error) mgresult.Result {
+	if err == nil {
+		return ErrorResult(status)
+	}
+	return ErrorResultWithMsg(status, err.Error())
+}
+
 func Init() {
 	errorCodeMessageI8N["zh-cn"] = errcode.InitZhCN()
 	errorCodeMessageI8N["zh-tw"] = errcode.InitZhTw()
